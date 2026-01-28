@@ -1,5 +1,6 @@
 #include <stdint.h>
 #include <stdbool.h>
+#include <wchar.h>
 
 #ifndef EFI_H
 #define EFI_H
