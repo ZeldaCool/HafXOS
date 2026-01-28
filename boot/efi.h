@@ -32,6 +32,7 @@ typedef struct {
   uint32_t Reserved;
 } EFI_TABLE_HEADER;
 
+
 typedef struct {
   uint32_t MaxMode;
   uint32_t Mode;
@@ -40,6 +41,44 @@ typedef struct {
   uint32_t CursorRow;
   uint8_t CursorVisible;
 } SIMPLE_TEXT_OUTPUT_MODE;
+
+typedef EFI_STATUS (*EFI_TEXT_CLEAR_SCREEN)(void *This);
+typedef EFI_STATUS (*EFI_TEXT_ENABLE_CURSOR)(void *This, uint8_t Visible);
+typedef EFI_STATUS (*EFI_TEXT_SET_ATTRIBUTE)(void *This, UINTN Attribute);
+typedef EFI_STATUS (*EFI_TEXT_STRING)(void *This, const wchar_t *String);
+
+typedef EFI_STATUS (*EFI_TEXT_SET_CURSOR_POSITION)(
+	void  *This,
+	UINTN Column,
+	UINTN Row);
+
+typedef struct {
+	EFI_PVOID                    Reset;
+	EFI_TEXT_STRING              OutputString;
+	EFI_PVOID                    TestString;
+	EFI_PVOID                    SetMode;
+	EFI_TEXT_SET_ATTRIBUTE       SetAttribute;
+	EFI_TEXT_CLEAR_SCREEN        ClearScreen;
+	EFI_TEXT_SET_CURSOR_POSITION SetCursorPosition;
+	EFI_TEXT_ENABLE_CURSOR       EnableCursor;
+	SIMPLE_TEXT_OUTPUT_MODE      *Mode;
+} EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL;
+
+
+typedef struct {
+	EFI_TABLE_HEADER                Hdr;
+	EFI_PVOID                       FirmwareVendor;
+	uint32_t                        FirmwareRevision;
+	EFI_PVOID                       ConsoleInHandle;
+	EFI_PVOID                       ConsoleOutHandle;
+	EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL *ConOut;
+	EFI_PVOID                       StandardErrorHandle;
+	EFI_SIMPLE_TEXT_OUTPUT_PROTOCOL *StdErr;
+	void                            *RuntimeServices;
+	void                            *BootServices;
+	UINTN                           NumberOfTableEntries;
+	void                            *ConfigurationTable;
+} EFI_SYSTEM_TABLE;
 
 #endif
 
