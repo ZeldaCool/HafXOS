@@ -1,6 +1,5 @@
 #include <stdint.h>
 #include <stdbool.h>
-#include <wchar.h>
 
 #ifndef EFI_H
 #define EFI_H
@@ -42,5 +41,6 @@ typedef struct {
   uint8_t CursorVisible;
 } SIMPLE_TEXT_OUTPUT_MODE;
 
+#endif
 
 
